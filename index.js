@@ -62,11 +62,11 @@ for (card in shop) {
 
 // Sets up a connection to the database.
 var con = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    port: process.env.PORT,
-    database: process.env.DATABASE
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    database: process.env.DB_DATABASE
 });
 
 // Connects to the database and extracts coin data.
@@ -367,4 +367,4 @@ bot.on("messageCreate", message => {
     };
 });
 
-bot.login(process.env.TOKEN);
+bot.login(process.env.DISCORD_TOKEN);
