@@ -29,7 +29,7 @@ const coinServer = process.env.SERVER_ID;
 const coinChannel = process.env.CHANNEL_ID;
 
 // Probability of posting a coin for each message. (100 = 1 in 100)
-const prob = 1;
+const prob = 1000;
 
 // Array to store data after querying the database.
 var coins = [];
@@ -61,7 +61,8 @@ for (card in shop) {
 }
 
 // Sets up a connection to the database.
-var con = mysql.createConnection({
+var con = mysql.createPool({
+    connectionLimit: 10,
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -70,7 +71,7 @@ var con = mysql.createConnection({
 });
 
 // Connects to the database and extracts coin data.
-con.connect(err => {
+con.getConnection(err => {
     if (err) throw err;
     console.log("Connected to database.");
     con.query(`SELECT id, value, xp${shopKeys} FROM \`${coinServer}\``, function(err, result) {
